@@ -29,11 +29,15 @@ class DrankFindaCLI
           if alcohol == "beer" || alcohol == "wine" || alcohol == "liquor"
             
             drink = DrankFindaWrapper.new(url(alcohol, nil, address, zip))
-              drink.get_drinks(alcohol)
+              if drink.get_drinks(alcohol) == "no drinks"
+                run
+              else
+              
               puts "Which one would you like?"
               style_input = gets.chomp
               drink = DrankFindaWrapper.new(url(alcohol, style_input, address, zip))
               drink.search_drink_type 
+              end
           else
            puts "That's not a valid drink!"
           end
@@ -63,7 +67,6 @@ class DrankFindaCLI
   def url(alcohol_type, style =nil, address=nil, zip=nil)
 
     url = "https://www.delivery.com/api/data/search?search_type=alcohol&?section=#{alcohol_type}&subsection=#{style}&address=#{address},#{zip}&order_time=ASAP&order_type=delivery&client_id=brewhacks2016"
-
   end
 
 end
